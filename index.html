@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nguyễn Khổng Duy Hoàng - CV Điều phối Chương trình CNTT</title>
+  
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Merriweather', 'serif'],
+          },
+          colors: {
+            vinNavy: '#0c2340',
+            vinBlue: '#1e3a8a',
+            vinGold: '#b45309',
+            vinLightGold: '#fef3c7',
+            academicSlate: '#334155',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* CSS cho in ấn và xuất PDF chuẩn A4 */
+    @media print {
+      body {
+        background-color: #ffffff !important;
+        font-size: 11pt !important;
+        color: #0f172a !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .shadow-sm, .shadow-md, .shadow-lg, .shadow-xl {
+        box-shadow: none !important;
+      }
+      .page-break {
+        page-break-before: always;
+      }
+      .cv-container {
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+      }
+      a {
+        text-decoration: none !important;
+        color: inherit !important;
+      }
+    }
+
+    /* Hiệu ứng chuyển động mượt */
+    .transition-smooth {
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  </style>
+</head>
+
+<body class="bg-slate-100 text-slate-800 font-sans antialiased selection:bg-blue-900 selection:text-white py-6 md:py-10">
+
+  <!-- Thanh công cụ nổi phía trên (Không in khi xuất PDF) -->
+  <aside class="no-print fixed top-4 right-4 z-50 flex items-center gap-2 bg-white/95 backdrop-blur-md px-3 py-2 rounded-2xl shadow-xl border border-slate-200" aria-label="Thao tác nhanh">
+    <button onclick="window.print()" class="flex items-center gap-2 bg-blue-900 hover:bg-blue-800 text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-smooth shadow-md">
+      <i class="fa-solid fa-file-pdf"></i>
+      <span>Tải PDF / In CV</span>
+    </button>
+    <button onclick="openDriveModal()" class="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-smooth shadow-sm" title="Đổi ảnh đại diện từ Google Drive">
+      <i class="fa-brands fa-google-drive"></i>
+      <span class="hidden sm:inline">Đổi ảnh Drive</span>
+    </button>
+    <button onclick="copyPageLink()" class="flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium transition-smooth" title="Sao chép liên kết trang">
+      <i class="fa-solid fa-share-nodes"></i>
+    </button>
+  </aside>
+
+  <!-- Container chính của CV (Khổ trang trang trọng) -->
+  <main class="cv-container max-w-4xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-200">
+    
+    <!-- HEADER HERO: Thông tin cá nhân & Chức danh -->
+    <header class="bg-gradient-to-br from-slate-900 via-blue-950 to-blue-900 text-white p-6 sm:p-10 relative overflow-hidden">
+      <!-- Hoa văn chìm mang phong cách học thuật/công nghệ -->
+      <div class="absolute -right-16 -top-16 w-72 h-72 rounded-full bg-blue-500/10 blur-3xl pointer-events-none"></div>
+      <div class="absolute right-1/3 -bottom-20 w-80 h-80 rounded-full bg-amber-500/10 blur-3xl pointer-events-none"></div>
+
+      <div class="relative z-10 flex flex-col md:flex-row items-center md:items-start gap-6 sm:gap-8">
+        
+        <!-- Khung ảnh đại diện liên kết Google Drive -->
+        <div class="relative group shrink-0">
+          <div class="w-32 h-32 sm:w-36 sm:h-36 rounded-2xl overflow-hidden border-4 border-white/20 shadow-2xl bg-slate-800 flex items-center justify-center relative">
+            <img 
+              id="avatarImg" 
+              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" 
+              alt="Chân dung Nguyễn Khổng Duy Hoàng" 
+              class="w-full h-full object-cover"
+              onerror="this.src='https://placehold.co/300x300/1e293b/ffffff?text=Avatar+Drive';"
+            >
+          </div>
+          <button onclick="openDriveModal()" class="no-print absolute bottom-1 right-1 bg-amber-500 hover:bg-amber-400 text-slate-900 p-2 rounded-full shadow-lg transition-smooth text-xs" title="Đổi ID ảnh Google Drive">
+            <i class="fa-solid fa-camera"></i>
+          </button>
+        </div>
+
+        <!-- Thông tin tên & Định hướng chức danh -->
+        <div class="flex-1 text-center md:text-left">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/20 text-amber-300 text-xs font-semibold tracking-wide uppercase mb-3 border border-amber-400/30">
+            <i class="fa-solid fa-graduation-cap"></i> Ứng cử viên Học thuật
+          </div>
+          <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-white mb-2">
+            NGUYỄN KHỔNG DUY HOÀNG
+          </h1>
+          <p class="text-blue-200 text-base sm:text-lg font-medium mb-4 flex items-center justify-center md:justify-start gap-2">
+            <i class="fa-solid fa-laptop-code text-amber-400"></i>
+            Điều phối Chương trình môn Công nghệ thông tin (Curriculum Coordinator)
+          </p>
+
+          <!-- Thanh liên hệ nhanh -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm text-slate-300 pt-2 border-t border-white/10">
+            <div class="flex items-center justify-center md:justify-start gap-2">
+              <i class="fa-solid fa-location-dot text-amber-400 w-4"></i>
+              <span>Hà Nội, Việt Nam</span>
+            </div>
+            <div class="flex items-center justify-center md:justify-start gap-2">
+              <i class="fa-solid fa-envelope text-amber-400 w-4"></i>
+              <span id="emailText">duyhoang.bk.it2@gmail.com</span>
+            </div>
+            <div class="flex items-center justify-center md:justify-start gap-2">
+              <i class="fa-solid fa-phone text-amber-400 w-4"></i>
+              <span id="phoneText">(+84) 98x xxx xxx</span>
+            </div>
+            <div class="flex items-center justify-center md:justify-start gap-2">
+              <i class="fa-brands fa-github text-amber-400 w-4"></i>
+              <span>github.com/duyhoang-edu</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </header>
+
+    <div class="p-6 sm:p-10 space-y-8">
+
+      <!-- TRIẾT LÝ GIÁO DỤC (Academic Philosophy) -->
+      <section class="bg-amber-50/70 border-l-4 border-amber-500 rounded-r-2xl p-5 sm:p-6 shadow-sm">
+        <div class="flex items-start gap-3">
+          <i class="fa-solid fa-quote-left text-amber-600 text-2xl sm:text-3xl shrink-0 mt-1 opacity-75"></i>
+          <div>
+            <h2 class="text-xs uppercase tracking-wider font-bold text-amber-800 mb-1">Triết lý giáo dục cá nhân</h2>
+            <blockquote class="font-serif italic text-slate-800 text-sm sm:text-base leading-relaxed">
+              "Tôi tin rằng, mọi em học sinh đều xứng đáng được quyền tiếp cận giáo dục theo phương pháp phù hợp nhất với các em. Có như vậy, tiềm năng sáng tạo và năng lực tư duy máy tính của các em mới được phát triển tối đa."
+            </blockquote>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHỈ SỐ NỔI BẬT (Quick Metrics) -->
+      <section class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 hover:border-blue-400 transition-smooth">
+          <div class="text-2xl sm:text-3xl font-extrabold text-blue-900">7+ Năm</div>
+          <div class="text-xs text-slate-600 font-medium mt-1">Giảng dạy & Cố vấn Toán - Tin</div>
+        </div>
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 hover:border-blue-400 transition-smooth">
+          <div class="text-2xl sm:text-3xl font-extrabold text-blue-900">3.41 / 4.0</div>
+          <div class="text-xs text-slate-600 font-medium mt-1">Bằng Giỏi KT Máy tính ĐHBK</div>
+        </div>
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 hover:border-blue-400 transition-smooth">
+          <div class="text-2xl sm:text-3xl font-extrabold text-blue-900">8 Lớp</div>
+          <div class="text-xs text-slate-600 font-medium mt-1">Điều phối thực hành ĐHBK</div>
+        </div>
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 hover:border-blue-400 transition-smooth">
+          <div class="text-2xl sm:text-3xl font-extrabold text-blue-900">Khối 6-12</div>
+          <div class="text-xs text-slate-600 font-medium mt-1">Kinh nghiệm xây dựng lộ trình</div>
+        </div>
+      </section>
+
+      <!-- MỤC TIÊU NGHỀ NGHIỆP (Summary) -->
+      <section>
+        <div class="flex items-center gap-2 text-blue-950 font-bold text-lg uppercase tracking-wide border-b-2 border-slate-200 pb-2 mb-3">
+          <i class="fa-solid fa-bullseye text-amber-600"></i>
+          <span>Mục Tiêu Nghề Nghiệp & Cam Kết Chuyên Môn</span>
+        </div>
+        <p class="text-slate-700 text-sm sm:text-base leading-relaxed text-justify">
+          Chuyên gia giáo dục định hướng Công nghệ thông tin với nền tảng kỹ thuật vững chắc từ Đại học Bách Khoa Hà Nội (Bằng Giỏi - Kỹ thuật Máy tính IT2) cùng 7 năm kinh nghiệm thực chiến trong công tác giảng dạy, cố vấn học thuật và thiết kế lộ trình học phân hóa cho học sinh phổ thông. Sở hữu tư duy hệ thống sắc bén, kinh nghiệm nghiên cứu công nghệ giáo dục (EdTech, Computer Vision) và kỹ năng điều phối thực hành đại học. 
+          Khát khao ứng dụng tư duy chuẩn hóa theo tiêu chuẩn quốc tế (CIS, CSTA, ISTE) để kiến tạo chương trình môn Công nghệ thông tin chỉn chu, hiện đại, khơi dậy niềm đam mê sáng tạo công nghệ cho học sinh toàn hệ thống Vinschool.
+        </p>
+      </section>
+
+      <!-- NĂNG LỰC CỐT LÕI (Core Competencies) -->
+      <section>
+        <div class="flex items-center gap-2 text-blue-950 font-bold text-lg uppercase tracking-wide border-b-2 border-slate-200 pb-2 mb-4">
+          <i class="fa-solid fa-shapes text-amber-600"></i>
+          <span>Năng Lực Cốt Lõi Khớp Với Vị Trí Quản Trị Học Thuật</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <div class="p-4 rounded-2xl border border-slate-200 bg-white hover:shadow-md transition-smooth">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="w-8 h-8 rounded-xl bg-blue-100 text-blue-900 flex items-center justify-center font-bold text-sm">
+                <i class="fa-solid fa-sitemap"></i>
+              </span>
+              <h3 class="font-bold text-slate-800 text-sm">Thiết kế & Khung hóa Lộ trình (Curriculum)</h3>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Phân tích mục tiêu chuẩn đầu ra, cấu trúc khối lượng kiến thức thành lộ trình học cá nhân hóa cho học sinh từ THCS đến THPT (Khối 6 đến 12).
+            </p>
+          </div>
+
+          <div class="p-4 rounded-2xl border border-slate-200 bg-white hover:shadow-md transition-smooth">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="w-8 h-8 rounded-xl bg-blue-100 text-blue-900 flex items-center justify-center font-bold text-sm">
+                <i class="fa-solid fa-microchip"></i>
+              </span>
+              <h3 class="font-bold text-slate-800 text-sm">Nền tảng Kỹ thuật & Khoa học Máy tính</h3>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Nắm chắc thuật toán, cấu trúc dữ liệu, lập trình (C/C++, Python) và nghiên cứu ứng dụng Trí tuệ nhân tạo (AI/Computer Vision) vào môi trường giáo dục số.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-2xl border border-slate-200 bg-white hover:shadow-md transition-smooth">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="w-8 h-8 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-sm">
+                <i class="fa-solid fa-clipboard-check"></i>
+              </span>
+              <h3 class="font-bold text-slate-800 text-sm">Giám sát, Dự giờ & Đảm bảo Chất lượng (QA)</h3>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Tổ chức điều phối, dự giờ lớp học thực hành, chuẩn hóa tiêu chí đánh giá, thu thập phản hồi của người học để cải tiến giáo án liên tục.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-2xl border border-slate-200 bg-white hover:shadow-md transition-smooth">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="w-8 h-8 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-sm">
+                <i class="fa-solid fa-award"></i>
+              </span>
+              <h3 class="font-bold text-slate-800 text-sm">Bồi dưỡng Mũi nhọn & Khảo thí</h3>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Xây dựng ngân hàng câu hỏi, ma trận đề kiểm tra và huấn luyện chuyên sâu học sinh năng khiếu tham gia các kỳ thi Học sinh giỏi vượt cấp.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- KINH NGHIỆM LÀM VIỆC & PHÁT TRIỂN HỌC THUẬT (Experience) -->
+      <section>
+        <div class="flex items-center gap-2 text-blue-950 font-bold text-lg uppercase tracking-wide border-b-2 border-slate-200 pb-2 mb-6">
+          <i class="fa-solid fa-briefcase text-amber-600"></i>
+          <span>Kinh Nghiệm Giảng Dạy, Quản Lý & Phát Triển Chương Trình</span>
+        </div>
+
+        <div class="space-y-6 relative before:absolute before:inset-0 before:left-3 before:w-0.5 before:bg-slate-200">
+          
+          <!-- Công việc 1: Minh Thành Math -->
+          <article class="relative pl-8 group">
+            <span class="absolute left-1.5 top-1.5 w-3.5 h-3.5 rounded-full bg-blue-900 border-2 border-white ring-4 ring-blue-100 group-hover:bg-amber-500 transition-smooth"></span>
+            <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-1">
+              <h3 class="text-base font-bold text-slate-900">Chuyên viên Giảng dạy & Xây dựng Lộ trình Toán - Tin</h3>
+              <span class="text-xs font-semibold text-blue-900 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-200 w-fit mt-1 sm:mt-0">1 năm kinh nghiệm</span>
+            </div>
+            <div class="text-xs font-medium text-amber-700 mb-2">Hệ Thống Giáo Dục Minh Thành Math</div>
+            <ul class="list-disc list-outside ml-4 text-xs sm:text-sm text-slate-600 space-y-1.5 text-justify">
+              <li><strong class="text-slate-800">Xây dựng & Chuẩn hóa lộ trình:</strong> Khảo sát năng lực đầu vào và trực tiếp thiết lập khung lộ trình học tập xuyên suốt, phân hóa theo trình độ cho học sinh các khối 6, 7, 8, 9, 10 và 12.</li>
+              <li><strong class="text-slate-800">Phát triển học liệu:</strong> Biên soạn hệ thống bài giảng, ngân hàng bài tập thực hành theo ma trận từ cơ bản đến vận dụng cao; thường xuyên cải tiến tài liệu dựa trên kết quả khảo sát định kỳ.</li>
+              <li><strong class="text-slate-800">Bồi dưỡng năng khiếu mũi nhọn:</strong> Trực tiếp huấn luyện và định hướng chiến thuật giải thuật cho học sinh lớp 8 thi vượt cấp kỳ thi Học sinh giỏi (HSG) Tin học lớp 9.</li>
+            </ul>
+          </article>
+
+          <!-- Công việc 2: Bách Khoa Trợ giảng -->
+          <article class="relative pl-8 group">
+            <span class="absolute left-1.5 top-1.5 w-3.5 h-3.5 rounded-full bg-blue-900 border-2 border-white ring-4 ring-blue-100 group-hover:bg-amber-500 transition-smooth"></span>
+            <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-1">
+              <h3 class="text-base font-bold text-slate-900">Trợ giảng Bộ môn Tin học Đại cương (Teaching Assistant)</h3>
+              <span class="text-xs font-semibold text-blue-900 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-200 w-fit mt-1 sm:mt-0">1 năm kinh nghiệm</span>
+            </div>
+            <div class="text-xs font-medium text-amber-700 mb-2">Trường Công nghệ Thông tin & Truyền thông – ĐHBK Hà Nội</div>
+            <ul class="list-disc list-outside ml-4 text-xs sm:text-sm text-slate-600 space-y-1.5 text-justify">
+              <li><strong class="text-slate-800">Điều phối thực hành:</strong> Trực tiếp tổ chức, điều phối chuyên môn và giảng dạy thực hành cho <span class="font-semibold text-blue-900">8 lớp sinh viên</span> (hơn 250 người học), bảo đảm đồng bộ chuẩn đầu ra kỹ năng lập trình.</li>
+              <li><strong class="text-slate-800">Đánh giá & Kiểm soát chất lượng:</strong> Phối hợp với giảng viên chính thiết lập tiêu chí chấm điểm bài tập lớn (rubrics), trực tiếp dự giờ, phản hồi bài thực hành và tháo gỡ điểm nghẽn nhận thức cho người học.</li>
+              <li><strong class="text-slate-800">Tối ưu giáo trình:</strong> Đề xuất hiệu chỉnh các bài tập thực hành máy tính theo hướng trực quan và gắn liền với bài toán thực tiễn.</li>
+            </ul>
+          </article>
+
+          <!-- Công việc 3: EdTech Bách Khoa -->
+          <article class="relative pl-8 group">
+            <span class="absolute left-1.5 top-1.5 w-3.5 h-3.5 rounded-full bg-blue-900 border-2 border-white ring-4 ring-blue-100 group-hover:bg-amber-500 transition-smooth"></span>
+            <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-1">
+              <h3 class="text-base font-bold text-slate-900">Thực tập sinh Nghiên cứu EdTech & Computer Vision</h3>
+              <span class="text-xs font-semibold text-blue-900 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-200 w-fit mt-1 sm:mt-0">6 tháng</span>
+            </div>
+            <div class="text-xs font-medium text-amber-700 mb-2">Trung tâm Chuyển đổi số EdTech – Đại học Bách Khoa Hà Nội</div>
+            <ul class="list-disc list-outside ml-4 text-xs sm:text-sm text-slate-600 space-y-1.5 text-justify">
+              <li>Nghiên cứu ứng dụng các mô hình thị giác máy tính (Computer Vision) trong việc phân tích tương tác người học và xây dựng lớp học thông minh.</li>
+              <li>Trau dồi tư duy hệ thống, tiếp cận các giải pháp số hóa giáo trình và ứng dụng công nghệ hiện đại vào quản trị học tập.</li>
+            </ul>
+          </article>
+
+          <!-- Hoạt động 4: 7 năm cố vấn -->
+          <article class="relative pl-8 group">
+            <span class="absolute left-1.5 top-1.5 w-3.5 h-3.5 rounded-full bg-blue-900 border-2 border-white ring-4 ring-blue-100 group-hover:bg-amber-500 transition-smooth"></span>
+            <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-1">
+              <h3 class="text-base font-bold text-slate-900">Hoạt động Giảng dạy & Cố vấn Cá nhân</h3>
+              <span class="text-xs font-semibold text-blue-900 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-200 w-fit mt-1 sm:mt-0">2019 – Nay (7 năm)</span>
+            </div>
+            <div class="text-xs font-medium text-amber-700 mb-2">Kèm cặp & Định hình tư duy logic phổ thông</div>
+            <p class="text-xs sm:text-sm text-slate-600 text-justify">
+              Liên tục đồng hành cùng học sinh lứa tuổi 11 - 18 tuổi. Nắm vững tâm lý học đường, sự thay đổi nhận thức theo từng giai đoạn và thấu hiểu cách đơn giản hóa kiến thức trừu tượng thành các bài toán thực tiễn lôi cuốn.
+            </p>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- HỌC VẤN & NGOẠI NGỮ (Education & Languages) -->
+      <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- Cột Học vấn -->
+        <div>
+          <div class="flex items-center gap-2 text-blue-950 font-bold text-base uppercase tracking-wide border-b-2 border-slate-200 pb-2 mb-3">
+            <i class="fa-solid fa-graduation-cap text-amber-600"></i>
+            <span>Học Vấn & Bằng Cấp</span>
+          </div>
+          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base">Đại học Bách Khoa Hà Nội</h3>
+            <p class="text-xs font-semibold text-blue-900 mb-1">Cử nhân Kỹ thuật Máy tính (Chương trình IT2)</p>
+            <div class="flex items-center gap-2 mb-2">
+              <span class="inline-block bg-emerald-100 text-emerald-800 text-xs px-2.5 py-0.5 rounded-full font-bold">Tốt nghiệp Loại Giỏi</span>
+              <span class="text-xs text-slate-600 font-semibold">GPA: 3.41 / 4.0</span>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Trang bị nền tảng chuyên sâu về cấu trúc máy tính, giải thuật, trí tuệ nhân tạo và phương pháp nghiên cứu khoa học chuẩn xác.
+            </p>
+          </div>
+        </div>
+
+        <!-- Cột Ngoại ngữ & Kỹ năng bổ trợ -->
+        <div>
+          <div class="flex items-center gap-2 text-blue-950 font-bold text-base uppercase tracking-wide border-b-2 border-slate-200 pb-2 mb-3">
+            <i class="fa-solid fa-language text-amber-600"></i>
+            <span>Ngoại Ngữ & Nghiên Cứu Chuẩn</span>
+          </div>
+          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+            <div>
+              <div class="flex justify-between items-center text-xs sm:text-sm font-bold text-slate-800 mb-1">
+                <span>Tiếng Anh Học thuật & Kỹ thuật</span>
+                <span class="text-blue-900 font-semibold">TOEIC 620 | IELTS 5.5</span>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Thành thạo đọc hiểu, tra cứu và tổng hợp các bộ giáo trình, tiêu chuẩn giáo dục Tin học quốc tế (như CSTA, Cambridge ICT, ISTE).
+              </p>
+            </div>
+            <div class="pt-2 border-t border-slate-200">
+              <div class="text-xs font-bold text-slate-800 mb-1">Công nghệ & Công cụ Giảng dạy:</div>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="text-[11px] bg-white border border-slate-200 px-2 py-0.5 rounded-md font-medium text-slate-700">Python</span>
+                <span class="text-[11px] bg-white border border-slate-200 px-2 py-0.5 rounded-md font-medium text-slate-700">C/C++</span>
+                <span class="text-[11px] bg-white border border-slate-200 px-2 py-0.5 rounded-md font-medium text-slate-700">Computer Vision</span>
+                <span class="text-[11px] bg-white border border-slate-200 px-2 py-0.5 rounded-md font-medium text-slate-700">LMS / Moodle</span>
+                <span class="text-[11px] bg-white border border-slate-200 px-2 py-0.5 rounded-md font-medium text-slate-700">Scratch / Maker</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- CAM KẾT VỀ MÔI TRƯỜNG GIÁO DỤC AN TOÀN (Child Safeguarding Commitment) -->
+      <section class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs text-slate-600 text-center leading-relaxed">
+        <i class="fa-solid fa-shield-halved text-blue-900 text-sm mb-1 inline-block"></i>
+        <p>
+          Cam kết tôn trọng và tuân thủ tuyệt đối <strong>Chính sách Bảo vệ Trẻ em (Child Safeguarding)</strong> và quy chuẩn văn hóa học đường của Hệ thống Giáo dục Vinschool. Sẵn sàng cung cấp đầy đủ thông tin xác minh lý lịch tư pháp, bằng cấp và người tham chiếu theo yêu cầu.
+        </p>
+      </section>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 text-center text-xs py-5 px-4 border-t border-slate-800">
+      <p>© 2026 Hồ sơ ứng tuyển học thuật - Nguyễn Khổng Duy Hoàng</p>
+      <p class="text-slate-500 mt-1">Thiết kế tối ưu hóa hiển thị và xuất PDF chuẩn A4 | Sẵn sàng lưu trữ trên GitHub Pages</p>
+    </footer>
+
+  </main>
+
+  <!-- MODAL: HƯỚNG DẪN & NHẬP DRIVE FILE ID (Không in) -->
+  <div id="driveModal" class="no-print fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <h3 class="font-bold text-slate-900 flex items-center gap-2">
+          <i class="fa-brands fa-google-drive text-amber-500 text-lg"></i>
+          Cập nhật Ảnh từ Google Drive
+        </h3>
+        <button onclick="closeDriveModal()" class="text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
+      </div>
+
+      <div class="py-4 space-y-3 text-xs sm:text-sm text-slate-600">
+        <p class="font-medium text-slate-800">Cách lấy link ảnh Drive hiển thị trực tiếp:</p>
+        <ol class="list-decimal ml-4 space-y-1">
+          <li>Mở quyền file ảnh trên Google Drive: <strong>"Bất kỳ ai có đường liên kết" (Anyone with the link)</strong>.</li>
+          <li>Dán toàn bộ link chia sẻ vào ô bên dưới, hệ thống sẽ tự trích xuất File ID cho bạn.</li>
+        </ol>
+
+        <div class="pt-2">
+          <label class="block text-xs font-semibold text-slate-700 mb-1" for="driveLinkInput">Dán Link Drive hoặc File ID:</label>
+          <input 
+            type="text" 
+            id="driveLinkInput" 
+            placeholder="https://drive.google.com/file/d/1A2b3C.../view hoặc chỉ cần File ID" 
+            class="w-full px-3 py-2 border border-slate-300 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-blue-800"
+          >
+        </div>
+
+        <div id="drivePreviewBox" class="text-xs text-emerald-700 bg-emerald-50 p-2.5 rounded-xl border border-emerald-200 hidden">
+          ✓ Đã nhận diện ID hợp lệ. Bấm <strong>Lưu & Hiển thị</strong> để cập nhật.
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
+        <button onclick="closeDriveModal()" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-xl transition-smooth">Đóng</button>
+        <button onclick="applyDriveImage()" class="px-4 py-2 text-xs font-semibold bg-blue-900 hover:bg-blue-800 text-white rounded-xl shadow-md transition-smooth">Lưu & Hiển thị</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST THÔNG BÁO NHẸ (Thay cho alert) -->
+  <div id="toast" class="no-print fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white px-5 py-2.5 rounded-2xl shadow-2xl text-xs font-medium opacity-0 pointer-events-none transition-all duration-300">
+    Thông báo
+  </div>
+
+  <!-- JAVASCRIPT ĐIỀU KHIỂN -->
+  <script>
+    // Hàm hiển thị thông báo Toast nhẹ nhàng
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.remove('opacity-0', 'pointer-events-none');
+      toast.classList.add('opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0', 'pointer-events-none');
+      }, 3000);
+    }
+
+    // Modal Drive Image
+    function openDriveModal() {
+      const modal = document.getElementById('driveModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeDriveModal() {
+      const modal = document.getElementById('driveModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // Trích xuất ID và thay link ảnh
+    function applyDriveImage() {
+      const input = document.getElementById('driveLinkInput').value.trim();
+      if (!input) {
+        showToast('Vui lòng dán link hoặc File ID từ Drive.');
+        return;
+      }
+
+      let fileId = input;
+      // Trích xuất ID nếu người dùng dán cả URL
+      const match = input.match(/\/d\/([a-zA-Z0-9_-]+)/);
+      if (match && match[1]) {
+        fileId = match[1];
+      } else if (input.includes('id=')) {
+        const urlParams = new URLSearchParams(input.split('?')[1]);
+        fileId = urlParams.get('id') || fileId;
+      }
+
+      // Tạo direct link qua lh3.googleusercontent.com (Tải nhanh, không chặn iframe)
+      const directUrl = `https://lh3.googleusercontent.com/d/${fileId}`;
+      const avatarImg = document.getElementById('avatarImg');
+      
+      avatarImg.src = directUrl;
+      localStorage.setItem('user_cv_avatar_drive_id', fileId);
+      closeDriveModal();
+      showToast('Đã áp dụng ảnh đại diện từ Google Drive thành công!');
+    }
+
+    // Sao chép link trang để chia sẻ cho nhà tuyển dụng
+    function copyPageLink() {
+      const dummy = document.createElement('input');
+      document.body.appendChild(dummy);
+      dummy.value = window.location.href;
+      dummy.select();
+      document.execCommand('copy');
+      document.body.removeChild(dummy);
+      showToast('Đã sao chép liên kết trang vào bộ nhớ tạm!');
+    }
+
+    // Khởi tạo: kiểm tra nếu từng lưu ID trước đó trong trình duyệt
+    window.onload = function() {
+      const savedId = localStorage.getItem('user_cv_avatar_drive_id');
+      if (savedId) {
+        document.getElementById('avatarImg').src = `https://lh3.googleusercontent.com/d/${savedId}`;
+      }
+    };
+  </script>
+
+</body>
+</html>
