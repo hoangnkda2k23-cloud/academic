@@ -77,10 +77,10 @@
       <i class="fa-solid fa-file-pdf"></i>
       <span>Tải PDF / In CV</span>
     </button>
-    <button onclick="openDriveModal()" class="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-smooth shadow-sm" title="Đổi ảnh đại diện từ Google Drive">
+    <!-- <button onclick="openDriveModal()" class="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-smooth shadow-sm" title="Đổi ảnh đại diện từ Google Drive">
       <i class="fa-brands fa-google-drive"></i>
       <span class="hidden sm:inline">Đổi ảnh Drive</span>
-    </button>
+    </button> -->
     <button onclick="copyPageLink()" class="flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium transition-smooth" title="Sao chép liên kết trang">
       <i class="fa-solid fa-share-nodes"></i>
     </button>
@@ -398,7 +398,7 @@
   </main>
 
   <!-- MODAL: HƯỚNG DẪN & NHẬP DRIVE FILE ID (Không in) -->
-  <div id="driveModal" class="no-print fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4">
+  <!-- <div id="driveModal" class="no-print fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200">
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
         <h3 class="font-bold text-slate-900 flex items-center gap-2">
@@ -435,7 +435,7 @@
         <button onclick="applyDriveImage()" class="px-4 py-2 text-xs font-semibold bg-blue-900 hover:bg-blue-800 text-white rounded-xl shadow-md transition-smooth">Lưu & Hiển thị</button>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <!-- TOAST THÔNG BÁO NHẸ (Thay cho alert) -->
   <div id="toast" class="no-print fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white px-5 py-2.5 rounded-2xl shadow-2xl text-xs font-medium opacity-0 pointer-events-none transition-all duration-300">
@@ -457,11 +457,11 @@
     }
 
     // Modal Drive Image
-    function openDriveModal() {
-      const modal = document.getElementById('driveModal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-    }
+    // function openDriveModal() {
+    //   const modal = document.getElementById('driveModal');
+    //   modal.classList.remove('hidden');
+    //   modal.classList.add('flex');
+    // }
 
     function closeDriveModal() {
       const modal = document.getElementById('driveModal');
@@ -470,32 +470,32 @@
     }
 
     // Trích xuất ID và thay link ảnh
-    function applyDriveImage() {
-      const input = document.getElementById('driveLinkInput').value.trim();
-      if (!input) {
-        showToast('Vui lòng dán link hoặc File ID từ Drive.');
-        return;
-      }
+    // function applyDriveImage() {
+    //   const input = document.getElementById('driveLinkInput').value.trim();
+    //   if (!input) {
+    //     showToast('Vui lòng dán link hoặc File ID từ Drive.');
+    //     return;
+    //   }
 
-      let fileId = input;
-      // Trích xuất ID nếu người dùng dán cả URL
-      const match = input.match(/\/d\/([a-zA-Z0-9_-]+)/);
-      if (match && match[1]) {
-        fileId = match[1];
-      } else if (input.includes('id=')) {
-        const urlParams = new URLSearchParams(input.split('?')[1]);
-        fileId = urlParams.get('id') || fileId;
-      }
+    //   let fileId = input;
+    //   // Trích xuất ID nếu người dùng dán cả URL
+    //   const match = input.match(/\/d\/([a-zA-Z0-9_-]+)/);
+    //   if (match && match[1]) {
+    //     fileId = match[1];
+    //   } else if (input.includes('id=')) {
+    //     const urlParams = new URLSearchParams(input.split('?')[1]);
+    //     fileId = urlParams.get('id') || fileId;
+    //   }
 
-      // Tạo direct link qua lh3.googleusercontent.com (Tải nhanh, không chặn iframe)
-      const directUrl = `https://lh3.googleusercontent.com/d/${fileId}`;
-      const avatarImg = document.getElementById('avatarImg');
+    //   // Tạo direct link qua lh3.googleusercontent.com (Tải nhanh, không chặn iframe)
+    //   const directUrl = `https://lh3.googleusercontent.com/d/${fileId}`;
+    //   const avatarImg = document.getElementById('avatarImg');
       
-      avatarImg.src = directUrl;
-      localStorage.setItem('user_cv_avatar_drive_id', fileId);
-      closeDriveModal();
-      showToast('Đã áp dụng ảnh đại diện từ Google Drive thành công!');
-    }
+    //   avatarImg.src = directUrl;
+    //   localStorage.setItem('user_cv_avatar_drive_id', fileId);
+    //   closeDriveModal();
+    //   showToast('Đã áp dụng ảnh đại diện từ Google Drive thành công!');
+    // }
 
     // Sao chép link trang để chia sẻ cho nhà tuyển dụng
     function copyPageLink() {
